@@ -5,16 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kibo Journal</title>
     <style>
-        :root { --accent: #274363; --bg: #fcfcfc; --text: #333; }
-        body { font-family: -apple-system, sans-serif; line-height: 1.6; color: var(--text); background: var(--bg); max-width: 700px; margin: 40px auto; padding: 20px; }
-        .tabs { display: flex; gap: 20px; margin-bottom: 30px; border-bottom: 1px solid #ddd; padding-bottom: 10px; }
-        .tab-link { cursor: pointer; color: #888; font-weight: 600; text-decoration: none; }
+        :root { --accent: #274363; --bg: #fcfcfc; --text: #333; --secondary: #666; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.7; color: var(--text); background: var(--bg); max-width: 650px; margin: 60px auto; padding: 20px; }
+        .tabs { display: flex; gap: 24px; margin-bottom: 50px; }
+        .tab-link { cursor: pointer; color: #aaa; font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
         .tab-link.active { color: var(--accent); }
         .content { display: none; }
-        .content.active { display: block; }
-        h1 { color: #222; }
-        h2 { color: var(--accent); margin-top: 30px; }
-        footer { margin-top: 50px; font-size: 0.8em; color: #aaa; text-align: center; }
+        .content.active { display: block; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        h1 { font-size: 2.5rem; letter-spacing: -1px; margin-bottom: 0.5rem; }
+        .subtitle { font-size: 1.2rem; color: var(--secondary); margin-bottom: 2rem; }
+        h2 { color: var(--accent); margin-top: 40px; }
+        footer { margin-top: 80px; font-size: 0.8rem; color: #ccc; text-align: center; }
     </style>
 </head>
 <body>
@@ -28,26 +31,38 @@
     <!-- Home Tab -->
     <div id="home" class="content active">
         <h1>Kibo Journal</h1>
-        <p>Mindful budgeting for a clearer life. Kibo helps you align your spending with your values.</p>
-        <p>Kibo is a "local-first" app. All your data stays on your device.</p>
+        <p class="subtitle">The Japanese art of mindful spending.</p>
+        
+        <p>Kibo Journal is a digital sanctuary for your financial life. Inspired by the traditional Kakeibo practice, it moves away from the stress of automated tracking and encourages a deliberate, mindful connection with your money.</p>
+        
+        <h2>Why Kibo?</h2>
+        <p>Most budgeting apps focus on restriction. Kibo focuses on <strong>alignment</strong>. We believe that when you take the time to pause and record your spending, you stop viewing your money as a finite resource to be guarded, and start seeing it as a tool to fuel the life you value.</p>
+        
+        <ul>
+            <li><strong>Save First:</strong> Commit to your future before covering your daily expenses.</li>
+            <li><strong>The Four Pillars:</strong> Organize your spending into Needs, Wants, Culture & Growth, and Unexpected categories.</li>
+            <li><strong>Mindful Logging:</strong> A built-in pause that invites you to reflect on <em>why</em> you are spending, not just <em>what</em> you are spending.</li>
+            <li><strong>Monthly Reflection:</strong> A dedicated space to review your habits, celebrate your wins, and adjust your plan with kindness.</li>
+        </ul>
+        
+        <p>Kibo isn't about being perfect. It's about being present.</p>
     </div>
 
     <!-- Privacy Tab -->
     <div id="privacy" class="content">
         <h2>Privacy Policy</h2>
-        <p><strong>Last Updated: June 11, 2026</strong></p>
-        <p>Kibo Journal stores all your data locally on your device. We do not operate servers, track your behavior, or sell your information.</p>
+        <p>Your financial life is private. Kibo Journal is a "local-first" application.</p>
+        <p>All your budgets, expenses, and journals are stored exclusively on your device using encrypted, local storage. We have no access to your data, no servers to store it, and no way to identify you. What you spend and how you reflect is yours alone.</p>
     </div>
 
     <!-- Terms Tab -->
     <div id="terms" class="content">
         <h2>Terms of Service</h2>
-        <p>By using Kibo, you agree that it is a tool for personal record-keeping provided on an "as-is" basis. You are responsible for your own data backups.</p>
+        <p>Kibo Journal is provided "as-is" as a personal record-keeping tool. We are not financial advisors, and the app is intended for educational and personal reflection purposes. You are responsible for your own data security by backing up your device.</p>
     </div>
 
     <footer>
-        <p>Questions? Reach out to support@kibo.app</p>
-        <p>&copy; 2026 Kibo Journal.</p>
+        <p>&copy; 2026 Kibo Journal &bull; support@kibo.app</p>
     </footer>
 
     <script>
