@@ -1,77 +1,643 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kibo Journal</title>
-    <style>
-        :root { --accent: #274363; --bg: #fcfcfc; --text: #333; --secondary: #666; }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.7; color: var(--text); background: var(--bg); max-width: 650px; margin: 60px auto; padding: 20px; }
-        .tabs { display: flex; gap: 24px; margin-bottom: 50px; }
-        .tab-link { cursor: pointer; color: #aaa; font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
-        .tab-link.active { color: var(--accent); }
-        .content { display: none; }
-        .content.active { display: block; animation: fadeIn 0.4s ease; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        
-        h1 { font-size: 2.5rem; letter-spacing: -1px; margin-bottom: 0.5rem; }
-        .subtitle { font-size: 1.2rem; color: var(--secondary); margin-bottom: 2rem; }
-        h2 { color: var(--accent); margin-top: 40px; }
-        footer { margin-top: 80px; font-size: 0.8rem; color: #ccc; text-align: center; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kibo Journal — The Japanese Art of Mindful Spending</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream:      #f2efe6;
+      --warm-light: #d9d1c1;
+      --warm-mid:   #b7b0a2;
+      --warm-deep:  #7c776e;
+      --charcoal:   #3f3c37;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-weight: 400;
+      font-size: 15px;
+      line-height: 1.8;
+      background: var(--cream);
+      color: var(--charcoal);
+    }
+
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* ─── NAV ─── */
+    header { padding: 40px 0 0; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+
+    .nav-wordmark {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 1.05rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--charcoal);
+    }
+
+    .nav-kanji-small {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.85rem;
+      color: var(--warm-mid);
+      letter-spacing: 0;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links button {
+      background: none;
+      border: none;
+      border-bottom: 1px solid transparent;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--warm-mid);
+      padding: 2px 0;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .nav-links button:hover { color: var(--charcoal); }
+    .nav-links button.active {
+      color: var(--charcoal);
+      border-bottom-color: var(--charcoal);
+    }
+
+    /* ─── RULE ─── */
+    .rule { height: 1px; background: var(--warm-light); margin: 36px 0; }
+    .rule-sm { height: 1px; background: var(--warm-light); margin: 28px 0; }
+
+    /* ─── TABS ─── */
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .tab-content.active {
+        animation: fadeUp 0.3s ease both;
+      }
+      @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(6px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      padding: 72px 0 56px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-ghost {
+      position: absolute;
+      top: 20px;
+      right: -10px;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 9rem;
+      line-height: 1;
+      color: var(--warm-light);
+      pointer-events: none;
+      user-select: none;
+      letter-spacing: -4px;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--warm-mid);
+      margin-bottom: 18px;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 3.6rem;
+      letter-spacing: -1.5px;
+      line-height: 1.05;
+      color: var(--charcoal);
+      margin-bottom: 20px;
+    }
+
+    .hero-sub {
+      font-size: 0.96rem;
+      color: var(--warm-deep);
+      line-height: 1.85;
+      max-width: 420px;
+    }
+
+    /* ─── SECTIONS ─── */
+    section { padding: 48px 0; }
+
+    .eyebrow {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--warm-mid);
+      margin-bottom: 16px;
+    }
+
+    .section-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 1.85rem;
+      line-height: 1.3;
+      color: var(--charcoal);
+      margin-bottom: 20px;
+    }
+
+    p {
+      color: var(--warm-deep);
+      font-size: 0.93rem;
+      line-height: 1.9;
+      margin-bottom: 14px;
+    }
+
+    p:last-child { margin-bottom: 0; }
+
+    /* ─── FOUR QUESTIONS ─── */
+    .questions { margin-top: 36px; }
+
+    .q-item {
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      gap: 0 20px;
+      padding: 26px 0;
+      border-bottom: 1px solid var(--warm-light);
+      align-items: start;
+    }
+
+    .q-item:first-child { border-top: 1px solid var(--warm-light); }
+
+    .q-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 1.6rem;
+      line-height: 1;
+      color: var(--warm-light);
+      padding-top: 4px;
+      text-align: center;
+    }
+
+    .q-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 1.2rem;
+      color: var(--charcoal);
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+
+    .q-desc {
+      font-size: 0.875rem;
+      color: var(--warm-deep);
+      line-height: 1.75;
+      margin-bottom: 0;
+    }
+
+    /* ─── FOUR PILLARS ─── */
+    .pillars {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--warm-light);
+      border: 1px solid var(--warm-light);
+      margin-top: 36px;
+    }
+
+    .pillar {
+      background: var(--cream);
+      padding: 28px 22px 26px;
+    }
+
+    .pillar-label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--warm-mid);
+      margin-bottom: 8px;
+    }
+
+    .pillar-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: var(--charcoal);
+      margin-bottom: 10px;
+    }
+
+    .pillar-desc {
+      font-size: 0.83rem;
+      color: var(--warm-deep);
+      line-height: 1.7;
+      margin-bottom: 0;
+    }
+
+    /* ─── CALLOUT ─── */
+    .callout {
+      position: relative;
+      border-left: 2px solid var(--warm-mid);
+      padding: 28px 36px 28px 32px;
+      margin: 16px 0 0;
+      overflow: hidden;
+    }
+
+    .callout::after {
+      content: '家計簿';
+      position: absolute;
+      right: 12px;
+      bottom: -8px;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 3.5rem;
+      color: var(--warm-light);
+      pointer-events: none;
+      user-select: none;
+      line-height: 1;
+    }
+
+    .callout-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--charcoal);
+      line-height: 1.65;
+      margin-bottom: 12px;
+    }
+
+    .callout-attr {
+      font-size: 0.72rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--warm-mid);
+      margin-bottom: 0;
+    }
+
+    /* ─── FRICTION BLOCK ─── */
+    .friction-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--warm-light);
+      border: 1px solid var(--warm-light);
+      margin-top: 28px;
+    }
+
+    .friction-item {
+      background: var(--cream);
+      padding: 20px 20px 18px;
+    }
+
+    .friction-icon {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--warm-mid);
+      margin-bottom: 8px;
+    }
+
+    .friction-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--charcoal);
+      margin-bottom: 6px;
+    }
+
+    .friction-text {
+      font-size: 0.81rem;
+      color: var(--warm-deep);
+      line-height: 1.65;
+      margin-bottom: 0;
+    }
+
+    /* ─── POLICY ─── */
+    .policy { padding: 60px 0 80px; }
+
+    .policy h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 2rem;
+      color: var(--charcoal);
+      margin-bottom: 28px;
+    }
+
+    .policy h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: var(--charcoal);
+      margin-top: 32px;
+      margin-bottom: 10px;
+    }
+
+    .policy-meta {
+      font-size: 0.72rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--warm-mid);
+      margin-top: 40px;
+      margin-bottom: 0;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--warm-light);
+      padding: 28px 0 40px;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-copy {
+      font-size: 0.72rem;
+      color: var(--warm-mid);
+      margin-bottom: 0;
+    }
+
+    .footer-copy a {
+      color: var(--warm-mid);
+      text-decoration: none;
+      border-bottom: 1px solid var(--warm-light);
+      transition: color 0.2s;
+    }
+
+    .footer-copy a:hover { color: var(--charcoal); }
+
+    .footer-mark {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 300;
+      color: var(--warm-light);
+      user-select: none;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 520px) {
+      .container { padding: 0 20px; }
+      .hero-ghost { font-size: 6rem; }
+      .hero-title { font-size: 2.6rem; }
+      .pillars { grid-template-columns: 1fr; }
+      .friction-grid { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; gap: 10px; text-align: center; }
+    }
+  </style>
 </head>
 <body>
 
-    <nav class="tabs">
-        <a class="tab-link active" onclick="showTab('home')">Home</a>
-        <a class="tab-link" onclick="showTab('privacy')">Privacy</a>
-        <a class="tab-link" onclick="showTab('terms')">Terms</a>
+<div class="container">
+
+  <header>
+    <nav>
+      <div class="nav-brand">
+        <span class="nav-wordmark">Kibo Journal</span>
+        <span class="nav-kanji-small">希望</span>
+      </div>
+      <ul class="nav-links">
+        <li><button class="active" onclick="showTab('home', this)">Home</button></li>
+        <li><button onclick="showTab('privacy', this)">Privacy</button></li>
+        <li><button onclick="showTab('terms', this)">Terms</button></li>
+      </ul>
     </nav>
+    <div class="rule"></div>
+  </header>
 
-    <!-- Home Tab -->
-    <div id="home" class="content active">
-        <h1>Kibo Journal</h1>
-        <p class="subtitle">The Japanese art of mindful spending.</p>
-        
-        <p>Kibo Journal is a digital sanctuary for your financial life. Inspired by the traditional Kakeibo practice, it moves away from the stress of automated tracking and encourages a deliberate, mindful connection with your money.</p>
-        
-        <h2>Why Kibo?</h2>
-        <p>Most budgeting apps focus on restriction. Kibo focuses on <strong>alignment</strong>. We believe that when you take the time to pause and record your spending, you stop viewing your money as a finite resource to be guarded, and start seeing it as a tool to fuel the life you value.</p>
-        
-        <ul>
-            <li><strong>Save First:</strong> Commit to your future before covering your daily expenses.</li>
-            <li><strong>The Four Pillars:</strong> Organize your spending into Needs, Wants, Culture & Growth, and Unexpected categories.</li>
-            <li><strong>Mindful Logging:</strong> A built-in pause that invites you to reflect on <em>why</em> you are spending, not just <em>what</em> you are spending.</li>
-            <li><strong>Monthly Reflection:</strong> A dedicated space to review your habits, celebrate your wins, and adjust your plan with kindness.</li>
-        </ul>
-        
-        <p>Kibo isn't about being perfect. It's about being present.</p>
+  <!-- ════ HOME ════ -->
+  <div id="home" class="tab-content active">
+
+    <div class="hero">
+      <div class="hero-ghost" aria-hidden="true">家計簿</div>
+      <p class="hero-eyebrow">Kakeibo · 家計簿</p>
+      <h1 class="hero-title">The journal<br>that asks<br><em>why.</em></h1>
+      <p class="hero-sub">Kibo is a digital kakeibo — a Japanese practice of mindful spending. Not a tracker. Not a budget enforcer. A monthly act of honest reflection.</p>
     </div>
 
-    <!-- Privacy Tab -->
-    <div id="privacy" class="content">
-        <h2>Privacy Policy</h2>
-        <p>Your financial life is private. Kibo Journal is a "local-first" application.</p>
-        <p>All your budgets, expenses, and journals are stored exclusively on your device using encrypted, local storage. We have no access to your data, no servers to store it, and no way to identify you. What you spend and how you reflect is yours alone.</p>
+    <section>
+      <p class="eyebrow">The Philosophy</p>
+      <h2 class="section-heading">A 120-year-old practice, still ahead of its time</h2>
+      <p>Kakeibo (家計簿) was invented in 1904 by Hani Motoko, Japan's first female journalist. She believed that most people overspend not from lack of self-control, but from lack of awareness. The practice she designed asks you to record every expense by hand — because the act of writing is itself the intervention.</p>
+      <p>Most budgeting apps automate tracking in order to remove effort. Kibo asks for the opposite. The deliberate pause of logging an expense by hand is where the value lives.</p>
+    </section>
+
+    <div class="rule"></div>
+
+    <section>
+      <p class="eyebrow">Every month, four questions</p>
+      <h2 class="section-heading">The structure Kakeibo was built around</h2>
+      <p>Traditional kakeibo begins each month not with a budget spreadsheet, but with four honest questions — asked in order. Kibo guides you through each one.</p>
+
+      <div class="questions">
+        <div class="q-item">
+          <div class="q-num" aria-label="One">一</div>
+          <div>
+            <div class="q-title">How much do you have available?</div>
+            <p class="q-desc">Start with what's real. Subtract your fixed obligations — rent, bills, subscriptions — from your income. This is your true available amount, not what you earn but what you actually control.</p>
+          </div>
+        </div>
+        <div class="q-item">
+          <div class="q-num" aria-label="Two">二</div>
+          <div>
+            <div class="q-title">How much would you like to save?</div>
+            <p class="q-desc">This is the critical difference. Savings is not what's left over. It is a commitment made before the first purchase — an untouchable amount set aside for your future self, first. You live on the remainder.</p>
+          </div>
+        </div>
+        <div class="q-item">
+          <div class="q-num" aria-label="Three">三</div>
+          <div>
+            <div class="q-title">How much are you spending?</div>
+            <p class="q-desc">Log each expense into one of four pillars. The friction of writing it down is the point — it turns a passive transaction into a conscious choice, and reveals patterns that automation quietly hides.</p>
+          </div>
+        </div>
+        <div class="q-item">
+          <div class="q-num" aria-label="Four">四</div>
+          <div>
+            <div class="q-title">How can you improve?</div>
+            <p class="q-desc">At the end of the month, you reflect — not to judge yourself, but to understand yourself. What did your spending say about what you value? What would you choose differently?</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="rule"></div>
+
+    <section>
+      <p class="eyebrow">The Four Pillars</p>
+      <h2 class="section-heading">Every expense has a home</h2>
+      <p>Kakeibo doesn't sort spending by merchant or category tag. It sorts by purpose — by the role each expense plays in your life. This is what makes the monthly reflection meaningful rather than mathematical.</p>
+
+      <div class="pillars">
+        <div class="pillar">
+          <div class="pillar-label">Needs · 必要</div>
+          <div class="pillar-name">Survival</div>
+          <p class="pillar-desc">Groceries, rent, transport, utilities, medicine. The essentials your life depends on.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-label">Wants · 欲望</div>
+          <div class="pillar-name">Optional</div>
+          <p class="pillar-desc">Dining out, new clothes, hobbies. Not bad — but consciously chosen, not automatically justified.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-label">Culture · 文化</div>
+          <div class="pillar-name">Growth</div>
+          <p class="pillar-desc">Books, courses, museums, concerts. Spending that invests in who you are becoming.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-label">Unexpected · 特別</div>
+          <div class="pillar-name">Extra</div>
+          <p class="pillar-desc">Repairs, gifts, emergencies. Life doesn't follow a plan. This pillar holds what didn't.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="rule"></div>
+
+    <section>
+      <p class="eyebrow">Mindful Friction</p>
+      <h2 class="section-heading">A digital app that honours the physical practice</h2>
+      <p>Traditional kakeibo is done with pen and paper. The physical act of writing creates a moment of friction that forces you to process a purchase — to own it, consciously. Kibo reintroduces this friction deliberately.</p>
+
+      <div class="friction-grid">
+        <div class="friction-item">
+          <div class="friction-icon">On Logging</div>
+          <div class="friction-title">Pause before recording</div>
+          <p class="friction-text">When logging a Want, Kibo asks why. Not to judge — to make the choice visible to yourself.</p>
+        </div>
+        <div class="friction-item">
+          <div class="friction-icon">On Saving</div>
+          <div class="friction-title">Save first</div>
+          <p class="friction-text">Your savings goal is set at the start of the month and treated as fixed. You plan around it, not after it.</p>
+        </div>
+        <div class="friction-item">
+          <div class="friction-icon">On Categories</div>
+          <div class="friction-title">Pillar envelopes</div>
+          <p class="friction-text">Allocate your spending budget across the four pillars at the month's start. Track against each one independently.</p>
+        </div>
+        <div class="friction-item">
+          <div class="friction-icon">On Reflection</div>
+          <div class="friction-title">Monthly review</div>
+          <p class="friction-text">A dedicated space at month's end to review your Needs-to-Wants ratio, celebrate wins, and write your next month's intention.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="rule-sm"></div>
+
+    <div class="callout">
+      <p class="callout-quote">"Before you can manage your money, you must understand your relationship with it."</p>
+      <p class="callout-attr">— Hani Motoko · 1904</p>
     </div>
 
-    <!-- Terms Tab -->
-    <div id="terms" class="content">
-        <h2>Terms of Service</h2>
-        <p>Kibo Journal is provided "as-is" as a personal record-keeping tool. We are not financial advisors, and the app is intended for educational and personal reflection purposes. You are responsible for your own data security by backing up your device.</p>
+    <section>
+      <p class="eyebrow">Privacy by Design</p>
+      <h2 class="section-heading">Your financial life belongs to you</h2>
+      <p>Kibo is a local-first application. Everything you record — every budget, every expense, every reflection — lives encrypted on your device. There are no servers, no accounts, no way for us to see what you write. What you spend and how you reflect is entirely yours.</p>
+      <p>Kibo isn't about being perfect. It's about being present.</p>
+    </section>
+
+  </div><!-- /home -->
+
+  <!-- ════ PRIVACY ════ -->
+  <div id="privacy" class="tab-content">
+    <div class="policy">
+      <h2>Privacy Policy</h2>
+      <p>Your financial life is private. Kibo is designed that way from the ground up — not as a policy, but as an architecture.</p>
+
+      <h3>Local-first, always</h3>
+      <p>All data — your budgets, expenses, pillar allocations, and monthly reflections — is stored exclusively on your device using encrypted local storage. We have no servers that hold your data, no accounts that identify you, and no technical means of accessing what you record.</p>
+
+      <h3>No tracking, no analytics</h3>
+      <p>Kibo does not collect usage data, telemetry, crash reports linked to your identity, or any behavioral analytics. We do not know you are using the app. There is no way for us to know.</p>
+
+      <h3>No advertising</h3>
+      <p>Kibo does not serve ads and does not share data with advertising networks. There is no data to share.</p>
+
+      <h3>Your responsibility</h3>
+      <p>Because your data never leaves your device, you are responsible for keeping it backed up. If you lose your device without a backup, your records cannot be recovered by us or by anyone else. Please back up your device regularly.</p>
+
+      <p class="policy-meta">Last updated: June 2026</p>
     </div>
+  </div>
 
-    <footer>
-        <p>&copy; 2026 Kibo Journal &bull; support@kibo.app</p>
-    </footer>
+  <!-- ════ TERMS ════ -->
+  <div id="terms" class="tab-content">
+    <div class="policy">
+      <h2>Terms of Service</h2>
+      <p>Kibo Journal is provided as a personal record-keeping and reflection tool. By using it, you accept the terms below.</p>
 
-    <script>
-        function showTab(id) {
-            document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
-            document.querySelectorAll('.tab-link').forEach(t => t.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            event.target.classList.add('active');
-        }
-    </script>
+      <h3>Not financial advice</h3>
+      <p>Kibo is not a financial advising service. Nothing in the app constitutes financial, investment, or tax advice. The app is intended for personal reflection and educational use. Decisions you make based on your use of Kibo are your own responsibility.</p>
+
+      <h3>Provided as-is</h3>
+      <p>The app is provided without warranty of any kind. We make no guarantees about uptime, data integrity, or fitness for a particular purpose. Use it because it helps you — not because we've promised it will.</p>
+
+      <h3>Your data</h3>
+      <p>All data belongs entirely to you. We cannot access it, transfer it, or delete it on your behalf. Back up your device regularly — we have no ability to restore data for you.</p>
+
+      <h3>Changes to these terms</h3>
+      <p>We may update these terms from time to time. Continued use of the app after changes constitutes acceptance. We will note the update date below.</p>
+
+      <p class="policy-meta">Last updated: June 2026</p>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <p class="footer-copy">© 2026 Kibo Journal &nbsp;·&nbsp; <a href="mailto:support@kibo.app">support@kibo.app</a></p>
+      <span class="footer-mark" aria-hidden="true">家計簿</span>
+    </div>
+  </footer>
+
+</div><!-- /container -->
+
+<script>
+  function showTab(id, btn) {
+    document.querySelectorAll('.tab-content').forEach(function(c) {
+      c.classList.remove('active');
+    });
+    document.querySelectorAll('.nav-links button').forEach(function(b) {
+      b.classList.remove('active');
+    });
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
 </body>
 </html>
